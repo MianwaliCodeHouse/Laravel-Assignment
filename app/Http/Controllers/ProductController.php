@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ProductController extends Controller
 {
@@ -56,7 +58,11 @@ class ProductController extends Controller
         ]);
 
         $product = new Product($validated);
-
+        // $manager = new ImageManager(new Driver());
+        // $image = $request->file('image');
+        // $readimage = $manager->read($image);
+        // $resizeImage=$readimage->resize(300,300);
+        // $resizedImage->toJpeg()->save(storage link problem);
         if ($request->hasFile('image')) {
             $product->image_path = $request->file('image')->store('products', 'public');
         }

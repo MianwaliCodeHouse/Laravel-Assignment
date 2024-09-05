@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -75,22 +76,42 @@
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                     Price</th>
                                 <th
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                                    Description</th>
+                                <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                     Category</th>
+                                    
+                                @if (auth()->user()->hasRole('admin'))
+                                    
+                                
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                     Actions</th>
+                                    @endif
                             </tr>
                         </thead>
                         <tbody class="bg-gray-700 divide-y divide-gray-600">
+                            @php
+                                $index=0;
+                            @endphp
                             @foreach ($products as $product)
                                 <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ ++$index }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $product->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $product->category->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap"> @if($product->image_path)
+                                        <img src="{{ asset('public/storage/' . $product->image_path) }}" alt="{{ $product->name }}" style="width: 100px">
+
+                                    @else
+                                        No Image
+                                    @endif</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $product->price }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $product->description }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $product->category->name }}</td>
+                                    @if (auth()->user()->hasRole('admin'))
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('products.show', $product) }}"
-                                            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow-sm">View</a>
+                                       
                                         @can('update', $product)
                                             <a href="{{ route('products.edit', $product) }}"
                                                 class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md shadow-sm">Edit</a>
@@ -105,6 +126,7 @@
                                             </form>
                                         @endcan
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
