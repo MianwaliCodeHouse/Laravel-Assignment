@@ -52,10 +52,10 @@
                     </div>
                 </form>
 
-                @can('create')
+           
                 <a href="{{ route('products.create') }}"
                     class="inline-block mb-6 px-4 py-2 bg-gray-800 text-white rounded-md shadow-sm">Add New Product</a>
-                @endcan
+               
 
 
                 <div class="overflow-x-auto">
